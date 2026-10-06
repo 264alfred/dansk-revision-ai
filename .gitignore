@@ -1,0 +1,89 @@
+# dansk-revision-ai
+
+AI-assistent til dansk revision, bogføringskontrol og risikovurdering.
+
+Dette repo er et solidt starterprojekt og er designet til at kunne udvides med:
+- regnskabs- og journalanalyse
+- kontroltest for bogføringsfejl og misstatements
+- risikovurdering af kunder og transaktioner
+- dansk tekst- og dokumentbehandling
+- LLM-tilknytning for revisionserfaring og rapporter
+
+## Mål
+
+Bygge en AI-løsning, der kan:
+- gennemgå journalposter og identificere anomalier
+- flagge mistænkelige eller usædvanlige transaktioner
+- kontrollere basale revisorforhold som fakturakrav, moms og dokumentation
+- generere en dansk revisionsmæssig oversigt
+- kunne bruges som foundation for en web- eller API-baseret løsning
+
+## Teknologier
+
+- Python
+- FastAPI
+- Pydantic
+- Uvicorn
+- pytest
+
+## Projektstruktur
+
+```text
+app/
+  __init__.py
+  main.py
+  services/
+    revision_ai.py
+    __init__.py
+
+tests/
+  test_revision_ai.py
+requirements.txt
+README.md
+.gitignore
+```
+
+## Kørsel
+
+```bash
+python -m venv .venv
+source .venv/bin/activate  # Linux/Mac
+# eller .venv\Scripts\activate  # Windows
+pip install -r requirements.txt
+uvicorn app.main:app --reload
+```
+
+## API-eksempler
+
+### Health check
+
+```bash
+curl http://localhost:8000/health
+```
+
+### Revision-analyse
+
+```bash
+curl -X POST http://localhost:8000/audit \
+  -H "Content-Type: application/json" \
+  -d '{
+    "journal": [
+      {"date": "2024-09-03", "account": "1000", "amount": 25000, "vendor": "Nordic A/S", "description": "Kontant indbetaling", "document_id": "INV-1001", "vat_rate": 25},
+      {"date": "2024-09-03", "account": "1000", "amount": 25000, "vendor": "Nordic A/S", "description": "Kontant indbetaling", "document_id": "INV-1001", "vat_rate": 25},
+      {"date": "2024-09-04", "account": "6210", "amount": 125000, "vendor": "Mærsk", "description": "Feriepenge", "document_id": "DOC-995", "vat_rate": 0},
+      {"date": "2024-09-04", "account": "6210", "amount": 125000, "vendor": "Mærsk", "description": "Feriepenge", "document_id": "DOC-995", "vat_rate": 0}
+    ]
+  }'
+```
+
+## Roadmap
+
+1. Udvide med mere avanceret journalanalyse
+2. Tilføje dokumentparsing af fakturaer og bilag
+3. Integrere dansk juridisk og regnskabsmæssig viden
+4. Lægge LLM-lag ovenpå for tekstuel forklaring
+5. Tilføje dashboard og datavisualisering
+
+## Bemærkning
+
+Dette er et teknisk foundationprojekt. For en rigtig revisions-AI kræves ofte yderligere datamodeller, dokumentstyring, sikkerhed, og forbindelser til regnskabs- og ERP-systemer.
